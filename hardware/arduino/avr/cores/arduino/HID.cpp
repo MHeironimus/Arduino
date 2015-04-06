@@ -27,7 +27,11 @@
 
 Mouse_ Mouse;
 Keyboard_ Keyboard;
-Joystick_ Joystick;
+Joystick_ Joystick[2] =
+{
+	Joystick_(0),
+	Joystick_(1)
+};
 
 //================================================================================
 //================================================================================
@@ -42,6 +46,7 @@ Joystick_ Joystick;
 #define RAWHID_TX_SIZE 64
 #define RAWHID_RX_SIZE 64
 #define JOYSTICK_REPORT_ID 0x03
+#define JOYSTICK2_REPORT_ID 0x04
 
 extern const u8 _hidReportDescriptor[] PROGMEM;
 const u8 _hidReportDescriptor[] = {
@@ -126,11 +131,43 @@ const u8 _hidReportDescriptor[] = {
 	0x91, 0x02,				// Output (array)
 	0xC0					// end collection
 #else
-	// Joystick
+	// Joystick #1
 	0x05, 0x01,			// USAGE_PAGE (Generic Desktop)
 	0x09, 0x04,			// USAGE (Joystick)
 	0xa1, 0x01,			// COLLECTION (Application)
 	0x85, JOYSTICK_REPORT_ID,	//   REPORT_ID (3)
+
+	// 16 Buttons
+	0x05, 0x09,			//   USAGE_PAGE (Button)
+	0x19, 0x01,			//   USAGE_MINIMUM (Button 1)
+	0x29, 0x10,			//   USAGE_MAXIMUM (Button 16)
+	0x15, 0x00,			//   LOGICAL_MINIMUM (0)
+	0x25, 0x01,			//   LOGICAL_MAXIMUM (1)
+	0x75, 0x01,			//   REPORT_SIZE (1)
+	0x95, 0x10,			//   REPORT_COUNT (16)
+	0x55, 0x00,			//   UNIT_EXPONENT (0)
+	0x65, 0x00,			//   UNIT (None)
+	0x81, 0x02,			//   INPUT (Data,Var,Abs)
+
+	// X and Y Axis
+	0x05, 0x01,			//   USAGE_PAGE (Generic Desktop)
+	0x09, 0x01,			//   USAGE (Pointer)
+	0x15, 0x81,			//   LOGICAL_MINIMUM (-127)
+	0x25, 0x7f,     	//   LOGICAL_MAXIMUM (127)
+	0xA1, 0x00,			//   COLLECTION (Physical)
+	0x09, 0x30,		    //     USAGE (x)
+	0x09, 0x31,		    //     USAGE (y)
+	0x75, 0x08,			//     REPORT_SIZE (8)
+	0x95, 0x02,		    //     REPORT_COUNT (2)
+	0x81, 0x02,		    //     INPUT (Data,Var,Abs)
+	0xc0,				//   END_COLLECTION
+	0xc0,				// END_COLLECTION
+
+	// Joystick #2
+	0x05, 0x01,			// USAGE_PAGE (Generic Desktop)
+	0x09, 0x04,			// USAGE (Joystick)
+	0xa1, 0x01,			// COLLECTION (Application)
+	0x85, JOYSTICK2_REPORT_ID,	//   REPORT_ID (4)
 
 	// 16 Buttons
 	0x05, 0x09,			//   USAGE_PAGE (Button)
@@ -554,8 +591,9 @@ size_t Keyboard_::write(uint8_t c)
 
 #define joystickStateSize 4
 
-Joystick_::Joystick_()
+Joystick_::Joystick_(uint8_t initJoystickId)
 {
+	joystickId = initJoystickId;
 	xAxis = 0;
 	yAxis = 0;
 	buttons = 0;
@@ -618,7 +656,7 @@ void Joystick_::sendState()
 	data[3] = yAxis;
 
 	// HID_SendReport(Report number, array of values in same order as HID descriptor, length)
-	HID_SendReport(JOYSTICK_REPORT_ID, data, joystickStateSize);
+	HID_SendReport(JOYSTICK_REPORT_ID + joystickId, data, joystickStateSize);
 }
 
 #endif

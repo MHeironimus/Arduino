@@ -189,13 +189,14 @@ extern Keyboard_ Keyboard;
 class Joystick_
 {
 private:
+	uint8_t  joystickId;
 	bool     autoSendState;
 	int8_t	 xAxis;
 	int8_t	 yAxis;
 	uint16_t buttons;
 
 public:
-	Joystick_();
+	Joystick_(uint8_t initJoystickId);
 
 	void begin(bool initAutoSendState = true);
 	void end();
@@ -209,7 +210,7 @@ public:
 
 	void sendState();
 };
-extern Joystick_ Joystick;
+extern Joystick_ Joystick[2];
 
 //================================================================================
 //================================================================================
