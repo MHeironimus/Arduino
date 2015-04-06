@@ -147,8 +147,8 @@ const u8 _hidReportDescriptor[] = {
 	// X and Y Axis
 	0x05, 0x01,			//   USAGE_PAGE (Generic Desktop)
 	0x09, 0x01,			//   USAGE (Pointer)
-	0x15, 0x00,			//   LOGICAL_MINIMUM (0)
-	0x26, 0xff, 0x00,	//   LOGICAL_MAXIMUM (255)
+	0x15, 0x81,			//   LOGICAL_MINIMUM (-127)
+	0x25, 0x7f,     	//   LOGICAL_MAXIMUM (127)
 	0xA1, 0x00,			//   COLLECTION (Physical)
 	0x09, 0x30,		    //     USAGE (x)
 	0x09, 0x31,		    //     USAGE (y)
@@ -606,7 +606,7 @@ void Joystick_::setYAxis(int8_t value)
 
 void Joystick_::sendState()
 {
-	uint8_t data[joystickStateSize];
+	int8_t data[joystickStateSize];
 	uint16_t buttonTmp = buttons;
 
 	// Split 16 bit button-state into 2 bytes
@@ -614,8 +614,8 @@ void Joystick_::sendState()
 	buttonTmp >>= 8;
 	data[1] = buttonTmp & 0xFF;
 
-	data[2] = xAxis + 127;
-	data[3] = yAxis + 127;
+	data[2] = xAxis;
+	data[3] = yAxis;
 
 	// HID_SendReport(Report number, array of values in same order as HID descriptor, length)
 	HID_SendReport(JOYSTICK_REPORT_ID, data, joystickStateSize);
