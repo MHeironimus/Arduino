@@ -24,7 +24,6 @@
 //#define RAWHID_ENABLED
 
 //	Singletons for mouse, keyboard, and joystick
-
 Mouse_ Mouse;
 Keyboard_ Keyboard;
 Joystick_ Joystick[2] =
@@ -135,7 +134,7 @@ const u8 _hidReportDescriptor[] = {
 	0x05, 0x01,			// USAGE_PAGE (Generic Desktop)
 	0x09, 0x04,			// USAGE (Joystick)
 	0xa1, 0x01,			// COLLECTION (Application)
-	0x85, JOYSTICK_REPORT_ID,	//   REPORT_ID (3)
+	0x85, JOYSTICK_REPORT_ID, // REPORT_ID (3)
 
 	// 16 Buttons
 	0x05, 0x09,			//   USAGE_PAGE (Button)
@@ -167,7 +166,7 @@ const u8 _hidReportDescriptor[] = {
 	0x05, 0x01,			// USAGE_PAGE (Generic Desktop)
 	0x09, 0x04,			// USAGE (Joystick)
 	0xa1, 0x01,			// COLLECTION (Application)
-	0x85, JOYSTICK2_REPORT_ID,	//   REPORT_ID (4)
+	0x85, JOYSTICK2_REPORT_ID, // REPORT_ID (4)
 
 	// 16 Buttons
 	0x05, 0x09,			//   USAGE_PAGE (Button)
