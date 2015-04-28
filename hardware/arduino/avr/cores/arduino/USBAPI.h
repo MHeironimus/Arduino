@@ -159,6 +159,19 @@ extern Mouse_ Mouse;
 #define KEY_F11				0xCC
 #define KEY_F12				0xCD
 
+#define KEY_NUMPAD_ENTER    0xE0
+#define KEY_NUMPAD_1        0xE1
+#define KEY_NUMPAD_2        0xE2
+#define KEY_NUMPAD_3        0xE3
+#define KEY_NUMPAD_4        0xE4
+#define KEY_NUMPAD_5        0xE5
+#define KEY_NUMPAD_6        0xE6
+#define KEY_NUMPAD_7        0xE7
+#define KEY_NUMPAD_8        0xE8
+#define KEY_NUMPAD_9        0xE9
+#define KEY_NUMPAD_0        0xEA
+#define KEY_NUMPAD_DEL      0xEB
+
 //	Low level key report: up to 6 keys and shift, ctrl etc at once
 typedef struct
 {
