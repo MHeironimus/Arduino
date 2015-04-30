@@ -159,6 +159,10 @@ extern Mouse_ Mouse;
 #define KEY_F11				0xCC
 #define KEY_F12				0xCD
 
+#define KEY_NUMPAD_DIVIDE   0xDC
+#define KEY_NUMPAD_MULTIPLY 0xDD
+#define KEY_NUMPAD_MINUS    0xDE
+#define KEY_NUMPAD_PLUS     0xDF
 #define KEY_NUMPAD_ENTER    0xE0
 #define KEY_NUMPAD_1        0xE1
 #define KEY_NUMPAD_2        0xE2
